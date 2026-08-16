@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List App</title>
+    <meta name="description" content="Prepare and manage a shopping list before visiting the market.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="hero-header">
+        <div class="header-container">
+            <span class="group-badge">GROUP 11 &bull; PROJECT 6</span>
+            <h1>SHOPPING LIST</h1>
+            <p class="subtitle">Smart Market Management Tool</p>
+            <hr class="header-divider">
+            <p class="header-desc">An elegant and efficient application that allows users to prepare, track, and manage
+                a shopping list before visiting the market.</p>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="card">
+            <div class="card-badge">01</div>
+            <h2>Project Requirements </h2>
+            <div class="card-content">
+                <ul class="requirements-list">
+                    <li>Develop an application to prepare and manage a shopping list.</li>
+                    <li>Add shopping items.</li>
+                    <li>Specify quantity.</li>
+                    <li>Mark purchased items.</li>
+                    <li>Edit shopping items.</li>
+                    <li>Delete shopping items.</li>
+                    <li>Search shopping items.</li>
+                    <li>Store data using Local Storage.</li>
+                    <li>Display total number of items.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-badge">02</div>
+            <h2>Add Item to List</h2>
+            <div class="card-content">
+                <form id="shopping-form">
+                    <div class="form-group-row">
+                        <div class="form-group" style="flex: 2;">
+                            <label for="item-name">WHAT DO YOU NEED?</label>
+                            <input type="text" id="item-name" name="item-name" required
+                                placeholder="e.g., Tomatoes, Bread, Milk">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="item-qty">QUANTITY</label>
+                            <input type="number" id="item-qty" name="item-qty" required min="1" value="1">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">+ ADD TO LIST</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-badge">03</div>
+            <h2>How It Works & The Function Code</h2>
+            <div class="card-content">
+                <div class="code-block-container">
+                    <pre class="code-block"><code>form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    const qty = parseInt(qtyInput.value) || 1;
+    
+    if (name) {
+        shoppingList.push({
+            id: generateId(),
+            name,
+            quantity: qty,
+            purchased: false
+        });
+        
+        nameInput.value = '';
+        qtyInput.value = '1';
+        renderUI(searchInput.value);
+    }
+});</code></pre>
+                </div>
+                <div class="how-item">
+                    <div class="how-num">1</div>
+                    <div class="how-text">
+                        <h3>FUNCTION</h3>
+                        <p>The form <code>submit</code> event listener intercepts the form submission to add new items securely to the shopping list array.</p>
+                    </div>
+                </div>
+                <div class="how-item">
+                    <div class="how-num">2</div>
+                    <div class="how-text">
+                        <h3>PARAMETERS</h3>
+                        <p>It sanitizes inputs from the DOM, defaulting to a quantity of 1 if invalid, and verifies the name isn't empty.</p>
+                    </div>
+                </div>
+                <div class="how-item">
+                    <div class="how-num">3</div>
+                    <div class="how-text">
+                        <h3>DATA PERSISTENCE</h3>
+                        <p>A new object is generated with a unique ID and then pushed to the array. <code>renderUI()</code> handles saving to Local Storage and updating the DOM.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card wide-card">
+            <div class="card-badge">04</div>
+            <div class="records-header">
+                <h2>Your Shopping List</h2>
+                <div class="header-controls">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search items...">
+                    </div>
+                    <button id="clear-all-btn" class="btn-danger">CLEAR LIST</button>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-label">TOTAL ITEMS</span>
+                        <span class="stat-value" id="total-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">PURCHASED</span>
+                        <span class="stat-value" id="purchased-count">0</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="records-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-body">
+                            <!-- Items populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="empty-state" class="empty-state">
+                    <p>Your list is empty. Add some groceries!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-badge">05</div>
+            <h2>Group Members</h2>
+            <div class="card-content">
+                <p
+                    style="color: var(--text-secondary); margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase;">
+                    Group 11 &bull; Project 6</p>
+                <div class="member-list">
+                    <div class="member-item">
+                        <span class="member-index">01</span>
+                        <div class="member-info">
+                            <strong>EDEH IFUNANYA GOODNESS</strong>
+                            <span>2023030212634</span>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <span class="member-index">02</span>
+                        <div class="member-info">
+                            <strong>EZEH CHINEDU PAUL</strong>
+                            <span>2023030212644</span>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <span class="member-index">03</span>
+                        <div class="member-info">
+                            <strong>EZE JACOB CHIDIEBERE</strong>
+                            <span>2023030212101</span>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <span class="member-index">04</span>
+                        <div class="member-info">
+                            <strong>EDWARD DAVID CHIDIEBUBE</strong>
+                            <span>2023030210455</span>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <span class="member-index">05</span>
+                        <div class="member-info">
+                            <strong>EZE KINGSLEY IKENNA</strong>
+                            <span>2023030210235</span>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <span class="member-index">06</span>
+                        <div class="member-info">
+                            <strong>ENEOKO JEFFERY CHIDUBEM</strong>
+                            <span>2023030210453</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Group 11 &bull; Shopping List Project</p>
+    </footer>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Edit Item</h2>
+                <button type="button" id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editItemId">
+                <div class="form-group-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="editItemName">Item Name</label>
+                        <input type="text" id="editItemName" required>
+                    </div>
+                </div>
+                <div class="form-group-row" style="margin-top: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="editItemQty">Quantity</label>
+                        <input type="number" id="editItemQty" min="1" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancelEdit" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-primary"
+                        style="margin-top: 0; width: auto; padding: 0.75rem 1.5rem;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
